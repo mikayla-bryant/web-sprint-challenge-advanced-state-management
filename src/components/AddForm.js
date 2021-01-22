@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { addSmurf, getSmurf } from '../actions/index';
 import * as Yup from 'yup';
 
+const initialFormValues = {
+  name: '',
+  position: '',
+  nickname: '',
+  description: '',
+};
 const AddForm = (props) => {
-  const [formState, setFormState] = useState({
-    name: '',
-    position: '',
-    nickname: '',
-    description: '',
-  });
+  const [formState, setFormState] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState({
     name: '',
     position: '',
@@ -17,9 +18,9 @@ const AddForm = (props) => {
   });
   const [disabled, setDisabled] = useState(true);
   const formSchema = Yup.object().shape({
-    name: Yup.string().required('Error: You must include name.'),
-    position: Yup.string().required('Error: You must include position'),
-    nickname: Yup.string().required('Error: You must include nickname'),
+    name: Yup.string().required('You must include name.'),
+    position: Yup.string().required('You must include position'),
+    nickname: Yup.string().required('You must include nickname'),
     description: Yup.string(),
   });
 
@@ -51,6 +52,7 @@ const AddForm = (props) => {
       description: formState.description,
     };
     props.addSmurf(newSmurf);
+    setFormState(initialFormValues);
   };
 
   return (
@@ -61,17 +63,32 @@ const AddForm = (props) => {
           <div className='form-group'>
             <label htmlFor='name'>Name:</label>
             <br />
-            <input onChange={handleChange} name='name' id='name' />
+            <input
+              onChange={handleChange}
+              name='name'
+              id='name'
+              value={formState.name}
+            />
           </div>
           <div className='form-group'>
             <label htmlFor='position'>Position:</label>
             <br />
-            <input onChange={handleChange} name='position' id='position' />
+            <input
+              onChange={handleChange}
+              name='position'
+              id='position'
+              value={formState.position}
+            />
           </div>
           <div className='form-group'>
             <label htmlFor='nickname'>Nickname:</label>
             <br />
-            <input onChange={handleChange} name='nickname' id='nickname' />
+            <input
+              onChange={handleChange}
+              name='nickname'
+              id='nickname'
+              value={formState.nickname}
+            />
           </div>
           <div className='form-group'>
             <label htmlFor='description'>Description:</label>
@@ -80,6 +97,7 @@ const AddForm = (props) => {
               onChange={handleChange}
               name='description'
               id='description'
+              value={formState.description}
             />
           </div>
 
@@ -89,6 +107,9 @@ const AddForm = (props) => {
             role='alert'
           >
             Error:{props.error}
+            <div>{formErrors.name}</div>
+            <div>{formErrors.nickname}</div>
+            <div>{formErrors.position}</div>
           </div>
           <button disabled={disabled}>Submit Smurf</button>
         </form>
