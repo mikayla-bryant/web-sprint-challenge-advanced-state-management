@@ -1,24 +1,74 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { addSmurf, getSmurf } from '../actions/index';
 
 class AddForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      position: '',
+      nickname: '',
+      description: '',
+    };
+  }
+  componentDidMount() {
+    this.props.getSmurf();
+  }
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ ...this.state, [name]: value });
+    console.log(this.state);
+  };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.addSmurf(this.state);
+  };
+  render() {
+    return (
+      <section>
+        <h2>Add Smurf</h2>
+        <form onSubmit={this.handleSubmit}>
+          <div className='form-group'>
+            <label htmlFor='name'>Name:</label>
+            <br />
+            <input onChange={this.handleChange} name='name' id='name' />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='position'>Position:</label>
+            <br />
+            <input onChange={this.handleChange} name='position' id='position' />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='nickname'>Nickname:</label>
+            <br />
+            <input onChange={this.handleChange} name='nickname' id='nickname' />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='description'>Description:</label>
+            <br />
+            <input
+              onChange={this.handleChange}
+              name='description'
+              id='description'
+            />
+          </div>
 
-    render() {
-        return(<section>
-            <h2>Add Smurf</h2>
-            <form>
-                <div className="form-group">
-                    <label htmlFor="name">Name:</label><br/>
-                    <input onChange={this.handleChange} name="name" id="name" />
-                </div>
-
-                <div data-testid="errorAlert" className="alert alert-danger" role="alert">Error: </div>
-                <button>Submit Smurf</button>
-            </form>
-        </section>);
-    }
+          <div
+            data-testid='errorAlert'
+            className='alert alert-danger'
+            role='alert'
+          >
+            Error:{' '}
+          </div>
+          <button>Submit Smurf</button>
+        </form>
+      </section>
+    );
+  }
 }
 
-export default AddForm;
+export default connect(() => {}, { addSmurf, getSmurf })(AddForm);
 
 //Task List:
 //1. Add in all necessary import components and library methods.
