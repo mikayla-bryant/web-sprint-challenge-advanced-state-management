@@ -1,90 +1,102 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { addSmurf, getSmurf } from '../actions/index';
-import SmurfDisplay from './SmurfDisplay';
-class AddForm extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      name: '',
-      position: '',
-      nickname: '',
-      description: '',
-    };
-  }
+import * as Yup from 'yup';
 
-  handleChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({ ...this.state, [name]: value });
-    console.log(this.state);
+const AddForm = (props) => {
+  const [formState, setFormState] = useState({
+    name: '',
+    position: '',
+    nickname: '',
+    description: '',
+  });
+  const [formErrors, setFormErrors] = useState({
+    name: '',
+    position: '',
+    nickname: '',
+  });
+  const [disabled, setDisabled] = useState(true);
+  const formSchema = Yup.object().shape({
+    name: Yup.string().required('Error: You must include name.'),
+    position: Yup.string().required('Error: You must include position'),
+    nickname: Yup.string().required('Error: You must include nickname'),
+    description: Yup.string(),
+  });
+
+  useEffect(() => {
+    formSchema.isValid(formState).then((valid) => {
+      setDisabled(!valid);
+    });
+  }, [formState]);
+  const setErrors = (name, value) => {
+    Yup.reach(formSchema, name)
+      .validate(value)
+      .then(() => setFormErrors({ ...formErrors, [name]: '' }))
+      .catch((err) => setFormErrors({ ...formErrors, [name]: err.errors[0] }));
   };
-  handleSubmit = (e) => {
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormState({ ...formState, [name]: value });
+    console.log(formState);
+    setErrors(name, value);
+  };
+  const handleSubmit = (e) => {
     e.preventDefault();
     const newSmurf = {
-      id: Date.now(),
-      name: this.state.name,
-      position: this.state.position,
-      nickname: this.state.nickname,
-      description: this.state.description,
+      id: Math.floor(Math.random()),
+      name: formState.name,
+      position: formState.position,
+      nickname: formState.nickname,
+      description: formState.description,
     };
-    this.props.addSmurf(newSmurf);
+    props.addSmurf(newSmurf);
   };
-  render() {
-    return (
-      <>
-        <section>
-          <h2>Add Smurf</h2>
-          <form onSubmit={this.handleSubmit}>
-            <div className='form-group'>
-              <label htmlFor='name'>Name:</label>
-              <br />
-              <input onChange={this.handleChange} name='name' id='name' />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='position'>Position:</label>
-              <br />
-              <input
-                onChange={this.handleChange}
-                name='position'
-                id='position'
-              />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='nickname'>Nickname:</label>
-              <br />
-              <input
-                onChange={this.handleChange}
-                name='nickname'
-                id='nickname'
-              />
-            </div>
-            <div className='form-group'>
-              <label htmlFor='description'>Description:</label>
-              <br />
-              <input
-                onChange={this.handleChange}
-                name='description'
-                id='description'
-              />
-            </div>
 
-            <div
-              data-testid='errorAlert'
-              className='alert alert-danger'
-              role='alert'
-            >
-              Error:{this.props.error}
-            </div>
-            <button>Submit Smurf</button>
-          </form>
-        </section>
-        <section>
-          <SmurfDisplay />
-        </section>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <section>
+        <h2>Add Smurf</h2>
+        <form onSubmit={handleSubmit}>
+          <div className='form-group'>
+            <label htmlFor='name'>Name:</label>
+            <br />
+            <input onChange={handleChange} name='name' id='name' />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='position'>Position:</label>
+            <br />
+            <input onChange={handleChange} name='position' id='position' />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='nickname'>Nickname:</label>
+            <br />
+            <input onChange={handleChange} name='nickname' id='nickname' />
+          </div>
+          <div className='form-group'>
+            <label htmlFor='description'>Description:</label>
+            <br />
+            <input
+              onChange={handleChange}
+              name='description'
+              id='description'
+            />
+          </div>
+
+          <div
+            data-testid='errorAlert'
+            className='alert alert-danger'
+            role='alert'
+          >
+            Error:{props.error}
+          </div>
+          <button disabled={disabled}>Submit Smurf</button>
+        </form>
+      </section>
+      <section></section>
+    </>
+  );
+};
 
 export default connect(
   (state) => {

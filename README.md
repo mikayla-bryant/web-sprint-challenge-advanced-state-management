@@ -125,7 +125,16 @@ Your finished project must include all of the following requirements:
       _ `./App.js`
       _ `./components/AddForm.js`
       _ `./components/Smurf.js` \* `./components/SmurfDisplay.js`
-- [ ] You completed application should do the following: - Fetch and display data from the included server code on mounting. - Provide the user a form for adding in the Name, Position, Nickname and Description of a new Smurf. - Allow new smurfs to be added to the list when the submit smurf button is pressed. - Displays an error alert when name, position or nickname is not included in the submission. - Include the word "Error" and "name/position/nickname" in the rendered error alert as approprate. - Does NOT display an error alert when description is left blank. - Display an error alert if a smurf is submitted with a name already assigned to a smurf. - Include the word "Error" and the returned server error message in the rendered error alert as approprate. - DO NOT REMOVE ANY data-testid FIELDS FROM THE CODE. These fields are used for internal grading of your sprints. While we don't recommend using testid in most cases, it is necessary our grading systems currently.
+- [ ] You completed application should do the following:
+- Fetch and display data from the included server code on mounting.
+- Provide the user a form for adding in the Name, Position, Nickname and Description of a new Smurf.
+- Allow new smurfs to be added to the list when the submit smurf button is pressed.
+- Displays an error alert when name, position or nickname is not included in the submission.
+- Include the word "Error" and "name/position/nickname" in the rendered error alert as approprate.
+- Does NOT display an error alert when description is left blank.
+- Display an error alert if a smurf is submitted with a name already assigned to a smurf.
+- Include the word "Error" and the returned server error message in the rendered error alert as approprate.
+- DO NOT REMOVE ANY data-testid FIELDS FROM THE CODE. These fields are used for internal grading of your sprints. While we don't recommend using testid in most cases, it is necessary our grading systems currently.
 
 In your solution, it is essential that you follow best practices and produce clean and professional results. You will be scored on your adherence to proper code style and good organization. Schedule time to review, refine, and assess your work and perform basic professional polishing including spell-checking and grammar-checking on your work. It is better to submit a challenge that meets MVP than one that attempts too much and does not.
 
