@@ -22,7 +22,6 @@ class App extends Component {
         </nav>
         <main>
           <AddForm />
-          <SmurfDisplay />
         </main>
       </div>
     );

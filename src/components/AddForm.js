@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addSmurf, getSmurf } from '../actions/index';
-
+import SmurfDisplay from './SmurfDisplay';
 class AddForm extends React.Component {
   constructor() {
     super();
@@ -31,44 +31,57 @@ class AddForm extends React.Component {
   };
   render() {
     return (
-      <section>
-        <h2>Add Smurf</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div className='form-group'>
-            <label htmlFor='name'>Name:</label>
-            <br />
-            <input onChange={this.handleChange} name='name' id='name' />
-          </div>
-          <div className='form-group'>
-            <label htmlFor='position'>Position:</label>
-            <br />
-            <input onChange={this.handleChange} name='position' id='position' />
-          </div>
-          <div className='form-group'>
-            <label htmlFor='nickname'>Nickname:</label>
-            <br />
-            <input onChange={this.handleChange} name='nickname' id='nickname' />
-          </div>
-          <div className='form-group'>
-            <label htmlFor='description'>Description:</label>
-            <br />
-            <input
-              onChange={this.handleChange}
-              name='description'
-              id='description'
-            />
-          </div>
+      <>
+        <section>
+          <h2>Add Smurf</h2>
+          <form onSubmit={this.handleSubmit}>
+            <div className='form-group'>
+              <label htmlFor='name'>Name:</label>
+              <br />
+              <input onChange={this.handleChange} name='name' id='name' />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='position'>Position:</label>
+              <br />
+              <input
+                onChange={this.handleChange}
+                name='position'
+                id='position'
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='nickname'>Nickname:</label>
+              <br />
+              <input
+                onChange={this.handleChange}
+                name='nickname'
+                id='nickname'
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='description'>Description:</label>
+              <br />
+              <input
+                onChange={this.handleChange}
+                name='description'
+                id='description'
+              />
+            </div>
 
-          <div
-            data-testid='errorAlert'
-            className='alert alert-danger'
-            role='alert'
-          >
-            Error:{this.props.error}
-          </div>
-          <button>Submit Smurf</button>
-        </form>
-      </section>
+            <div
+              data-testid='errorAlert'
+              className='alert alert-danger'
+              role='alert'
+            >
+              Error:{this.props.error}
+            </div>
+            <button>Submit Smurf</button>
+          </form>
+        </section>
+        <section>
+          <SmurfDisplay />
+        </section>
+      </>
     );
   }
 }
