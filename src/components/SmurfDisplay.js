@@ -7,7 +7,7 @@ export class SmurfDisplay extends React.Component {
     return (
       <div>
         {this.props.smurfs.map((item) => {
-          console.log('New Item', item);
+          return <Smurf item={item} />;
         })}
       </div>
     );

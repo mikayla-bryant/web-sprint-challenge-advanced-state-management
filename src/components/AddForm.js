@@ -12,9 +12,7 @@ class AddForm extends React.Component {
       description: '',
     };
   }
-  componentDidMount() {
-    this.props.getSmurf();
-  }
+
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ ...this.state, [name]: value });
@@ -22,7 +20,14 @@ class AddForm extends React.Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addSmurf(this.state);
+    const newSmurf = {
+      id: Date.now(),
+      name: this.state.name,
+      position: this.state.position,
+      nickname: this.state.nickname,
+      description: this.state.description,
+    };
+    this.props.addSmurf(newSmurf);
   };
   render() {
     return (
@@ -59,7 +64,7 @@ class AddForm extends React.Component {
             className='alert alert-danger'
             role='alert'
           >
-            Error:{' '}
+            Error:{this.props.error}
           </div>
           <button>Submit Smurf</button>
         </form>
@@ -68,7 +73,12 @@ class AddForm extends React.Component {
   }
 }
 
-export default connect(() => {}, { addSmurf, getSmurf })(AddForm);
+export default connect(
+  (state) => {
+    return { error: state.error };
+  },
+  { addSmurf, getSmurf }
+)(AddForm);
 
 //Task List:
 //1. Add in all necessary import components and library methods.
